@@ -8,11 +8,14 @@ This repository provides:
   - Experiments using 10-fold cross-validation for the ISIC-2018 and KvasirSeg semantic segmentation datasets. 
 
 An overview of the framework can be seen below:
+
 ![plot](figures/schematic4.png)
 
 We view each CNN filter response as a surface in $d$-dimensional space. We use an approximate the local singularity strength coefficient for each point in this surface. 
 In this way, one can highlight structures that emerge from each CNN filter in a scale-free way.
+
 ![plot](figures/tentativa.png)
+
 The top 2nd-4th rows show arbitrarly selected feature maps for depth 1,2, and 3 of a SSR-U-Net, respecitvely.
 The bottom 2nd-4th rows show the singularity strength at each point of these filters. Note how SSR captures hidden structure from all scale. In the 2nd and 3rd images it encodes textural information. In the last case, it outlines borders around edges, specially those close to the region of interest.
 ### Recommended requirements
