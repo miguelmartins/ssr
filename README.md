@@ -32,9 +32,9 @@ Note that this code was developed for TensorFlow 2.14.1.
 
 ### Datasets
 #### ISIC-2018
-We use the following [code](https://github.com/NITR098/Awesome-U-Net/blob/main/datasets/prepare_isic.ipynb) from [1] to generate the numpy files: `X_tr_224x224.npy` and `Y_tr_224x224.npy`. Their file path should be specificated in the ISIC-18 experiments. 
+We use the following [code](https://github.com/NITR098/Awesome-U-Net/blob/main/datasets/prepare_isic.ipynb) from [1] to generate the numpy files: `X_tr_224x224.npy` and `Y_tr_224x224.npy`. Their file path should be specificated in the ISIC-18 experiments. Download the Training Data found in this [link](https://challenge.isic-archive.com/data/#2018) for our experiments. 
 #### Kvasir-Seg
-The directory structure is expected for Kvasir-Seg. The dataset can be downloaded [here](https://datasets.simula.no/kvasir-seg/): 
+The following directory structure is expected for Kvasir-Seg. The dataset can be downloaded [here](https://datasets.simula.no/kvasir-seg/): 
 
   ```bash
    .
