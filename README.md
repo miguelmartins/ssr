@@ -54,4 +54,5 @@ The following directory structure is expected for Kvasir-Seg. The dataset can be
 
 ### References
 [1] Xu, Yong, et al. "Encoding spatial distribution of convolutional features for texture representation." Advances in Neural Information Processing Systems 34 (2021): 22732-22744.
+
 [2] Azad, Reza, et al. "Medical image segmentation review: The success of u-net." arXiv preprint arXiv:2211.14830 (2022).
