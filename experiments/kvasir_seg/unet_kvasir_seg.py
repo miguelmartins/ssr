@@ -2,15 +2,13 @@ import numpy as np
 import os
 import tensorflow as tf
 
-
 from data.preprocessing import get_segmentation_data
-from models.ssr_unet import get_ssr_unet
+from models.unet import get_unet
 from config.parser import ExperimentConfigParser
 from sklearn.model_selection import KFold
 
 CONFIG_FILE = '/config/files/ten_fold_config.yaml'
-LOG_DIR = '/path/to/logdir'
-DATA_PATH = '/path/to/Kvasir-SEG/'
+LOG_DIR = '/home/miguelmartins/Projects/ssr/logs/kvasir-seg/'
 
 NUM_FOLDS = 10
 
@@ -29,8 +27,8 @@ def main():
     config_data = ExperimentConfigParser(name=f'kvasir-seg_pid{os.getpid()}',
                                          config_path=CONFIG_FILE,
                                          log_dir=LOG_DIR)
-    dataset = get_segmentation_data(img_path=os.path.join(DATA_PATH, 'images'),
-                                    msk_path=os.path.join(DATA_PATH, 'masks'),
+    dataset = get_segmentation_data(img_path=os.path.join(config_data.config.data.train_set_path, 'images'),
+                                    msk_path=os.path.join(config_data.config.data.train_set_path, 'masks'),
                                     batch_size=1,
                                     target_size=config_data.config.data.target_size)
     dataset = dataset.map(normalize_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
@@ -42,12 +40,12 @@ def main():
     for fold, (train_index, val_index) in enumerate(kf.split(dataset_np_x)):
         print(f"Fold {fold} starting...")
         fold_data = ExperimentConfigParser(
-            name=f'ssr-unet-{NUM_FOLDS}-folds-{fold}-kvasir-seg_pid{os.getpid()}',
+            name=f'unet-{NUM_FOLDS}-folds-{fold}-kvasir-seg_pid{os.getpid()}',
             config_path=CONFIG_FILE,
             log_dir=LOG_DIR)
-        model = get_ssr_unet(channels_per_level=fold_data.config.model.level_depth,
-                                                input_shape=fold_data.config.data.target_size + [3],
-                                                with_bn=False)
+        model = get_unet(channels_per_level=fold_data.config.model.level_depth,
+                         input_shape=fold_data.config.data.target_size + [3],
+                         with_bn=False)
         model.compile(loss=fold_data.loss_object,
                       optimizer=fold_data.optimizer_obj,
                       metrics=fold_data.metrics)
