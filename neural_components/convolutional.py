@@ -94,3 +94,39 @@ class UpsampleExpandingLayer(tf.keras.layers.Layer):
             x = self.bn2(x, training=training)
         x = tf.nn.relu(x)
         return x
+
+
+class FSpecialGaussianInitializer(tf.keras.initializers.Initializer):
+
+    def __init__(self, sigma):
+        self.sigma = sigma
+
+    def __call__(self, shape, dtype=None):
+        assert shape[0] == shape[1]
+        length = tf.cast(shape[0], dtype=tf.int32)
+        start_ = tf.cast(-(length - 1) / 2, dtype=tf.int32)
+        end_ = tf.cast((length - 1) / 2, dtype=tf.int32)
+        axis = tf.linspace(start=start_, stop=end_, num=length)
+        gauss = tf.exp(-0.5 * (axis ** 2) / (self.sigma ** 2))
+        kernel = tf.tensordot(gauss, gauss, axes=0)
+        kernel = kernel / tf.reduce_sum(kernel)
+        return tf.cast(kernel[:, :, tf.newaxis, tf.newaxis], dtype=dtype)
+
+    def get_config(self):  # To support serialization
+        return {'sigma': self.sigma}
+
+
+class SharedConv2D(tf.keras.layers.Layer):
+    def __init__(self, *args, **kwargs):
+        super(SharedConv2D, self).__init__()
+        self.shared_conv = tf.keras.layers.Conv2D(*args, **kwargs)
+        self.concat_layer = tf.keras.layers.Concatenate(axis=-1)
+
+    def build(self, input_shape):
+        _input_shape = list(input_shape[:-1]) + [1]
+        self.shared_conv.build(_input_shape)
+        super(SharedConv2D, self).build(input_shape)
+
+    def call(self, x):
+        num_channels = x.shape[-1]
+        return self.concat_layer([self.shared_conv(x[..., i][..., tf.newaxis]) for i in range(num_channels)])
