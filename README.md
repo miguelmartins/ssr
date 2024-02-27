@@ -4,6 +4,7 @@ Singularity Stregth Recalibration (SSR) is a lightweight, plug-in module for CNN
 
 This repository provides:
   - Source code for the TensorFlow 2.14 implementation of Squeeze-Excite and SSR modules
+  - Source code for the data-driven measurement maps of [1]
   - Source code for a vanilla U-Net and a U-Net leveraging SSR
   - Experiments using 10-fold cross-validation for the ISIC-2018 and KvasirSeg semantic segmentation datasets. 
 
@@ -52,4 +53,5 @@ The following directory structure is expected for Kvasir-Seg. The dataset can be
    ```
 
 ### References
-[1] Azad, Reza, et al. "Medical image segmentation review: The success of u-net." arXiv preprint arXiv:2211.14830 (2022).
+[1] Xu, Yong, et al. "Encoding spatial distribution of convolutional features for texture representation." Advances in Neural Information Processing Systems 34 (2021): 22732-22744.
+[2] Azad, Reza, et al. "Medical image segmentation review: The success of u-net." arXiv preprint arXiv:2211.14830 (2022).
