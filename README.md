@@ -8,7 +8,7 @@ This repository provides:
   - Source code for a vanilla U-Net and SSR-U-Net
   - Experiments using 10-fold cross-validation for the ISIC-2018 and KvasirSeg semantic segmentation datasets. 
 
-An overview of the framework can be seen below:
+An overview of the framework can be seen below.
 
 ![plot](figures/schematic4.png)
 
