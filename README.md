@@ -5,7 +5,7 @@ Singularity Stregth Recalibration (SSR) is a lightweight, plug-in module for CNN
 This repository provides:
   - Source code for the TensorFlow 2.14 implementation of Squeeze-Excite and SSR modules
   - Source code for the data-driven measurement maps of [1]
-  - Source code for a vanilla U-Net and a U-Net leveraging SSR
+  - Source code for a vanilla U-Net and SSR-U-Net
   - Experiments using 10-fold cross-validation for the ISIC-2018 and KvasirSeg semantic segmentation datasets. 
 
 An overview of the framework can be seen below:
