@@ -2,7 +2,7 @@ import numpy as np
 import os
 import tensorflow as tf
 
-from data.preprocessing import get_segmentation_data
+from etl.preprocessing import get_segmentation_data
 from models.unet import get_unet
 from config.parser import ExperimentConfigParser
 from sklearn.model_selection import KFold
