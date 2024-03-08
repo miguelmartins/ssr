@@ -8,7 +8,8 @@ from config.parser import ExperimentConfigParser
 from sklearn.model_selection import KFold
 
 CONFIG_FILE = '/config/files/ten_fold_config.yaml'
-LOG_DIR = '/home/miguelmartins/Projects/ssr/logs/kvasir-seg/'
+LOG_DIR = '/path/to/logdir'
+DATA_PATH = '/path/to/Kvasir-SEG/'
 
 NUM_FOLDS = 10
 
@@ -27,10 +28,10 @@ def main():
     config_data = ExperimentConfigParser(name=f'kvasir-seg_pid{os.getpid()}',
                                          config_path=CONFIG_FILE,
                                          log_dir=LOG_DIR)
-    dataset = get_segmentation_data(img_path=os.path.join(config_data.config.data.train_set_path, 'images'),
-                                    msk_path=os.path.join(config_data.config.data.train_set_path, 'masks'),
-                                    batch_size=1,
-                                    target_size=config_data.config.data.target_size)
+    dataset = get_segmentation_data(img_path=os.path.join(DATA_PATH, 'images'),
+                                msk_path=os.path.join(DATA_PATH, 'masks'),
+                                batch_size=1,
+                                target_size=config_data.config.data.target_size)
     dataset = dataset.map(normalize_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
     dataset_np_x = np.array([x for (x, _) in dataset]).squeeze(axis=1)
